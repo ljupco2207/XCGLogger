@@ -8,7 +8,9 @@
 //
 
 import Foundation
+#if !SWIFT_PACKAGE
 import ObjcExceptionBridging
+#endif
 
 /// Extract the type name from the given object
 ///
@@ -25,6 +27,7 @@ func extractTypeName(_ someObject: Any) -> String {
 /// - parameter name:     The name of the exception to throw
 /// - parameter message:  The message to include in the exception (why it occurred)
 /// - parameter userInfo: A dictionary with arbitrary info to be passed along with the exception
+#if !SWIFT_PACKAGE
 func _try(_ tryClosure: @escaping () -> (), catch catchClosure: @escaping (_ exception: NSException) -> (), finally finallyClosure: (() -> ())? = nil) {
     _try_objc(tryClosure, catchClosure, finallyClosure ?? {})
 }
@@ -37,3 +40,4 @@ func _try(_ tryClosure: @escaping () -> (), catch catchClosure: @escaping (_ exc
 func _throw(name: String, message: String? = nil, userInfo: [AnyHashable: Any]? = nil) {
     _throw_objc(NSException(name: NSExceptionName(rawValue: name), reason: message ?? name, userInfo: userInfo))
 }
+#endif

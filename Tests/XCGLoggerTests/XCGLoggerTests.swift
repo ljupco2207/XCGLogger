@@ -842,6 +842,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test Objective-C Exception Handling
+    #if !SWIFT_PACKAGE
     func test_00300_objectiveCExceptionHandling() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
@@ -869,7 +870,8 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
-
+    #endif
+    
     /// Test logging works correctly when logs are generated from multiple threads
     func test_01010_multiThreaded() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
